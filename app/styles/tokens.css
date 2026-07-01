@@ -1,0 +1,300 @@
+/* ============================================================================
+   ETHERYANA — Design Tokens
+   "For the gracefully powerful." · Quiet-luxury womenswear (eveningwear /
+   occasionwear), heritage of Spanish nobility — elegance as presence, not noise.
+   ----------------------------------------------------------------------------
+   Source of truth, in priority order:
+     1. brand_assets/Brandbook.pdf  — story, mission/vision/values, typography
+     2. brand_assets/logo.png       — gold emblem + espresso wordmark on ivory
+     3. brand_assets/*.jpg          — collection photography (garment palette)
+   Core brand colors are sampled directly from the logo; the editorial accents
+   are sampled from the photography. Numeric scales are extrapolated tints/shades
+   around those anchors. See BRAND-DESIGN-SYSTEM.md for full traceability + rules.
+   Framework-agnostic CSS custom properties — usable with or without Tailwind.
+   ============================================================================ */
+
+/* ---- Fonts -----------------------------------------------------------------
+   Display  (Tipografia Principal): Bodoni MT — a high-contrast Didone. The
+            ETHERYANA wordmark is set in it. Web match: 'Bodoni Moda' (Google),
+            falling back to a locally-installed 'Bodoni MT' / Didot.
+   Support  (Tipografia de Apoio):  Times New Roman. Loaded as 'Tinos' (Google),
+            a metrically-identical open clone, so rendering is consistent across
+            platforms; falls back to the user's real Times New Roman. */
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400;1,6..96,500&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+  /* ======================================================================
+     COLOR — RAW PALETTE
+     ====================================================================== */
+
+  /* -- GOLD — the signature (sampled from the logo emblem) ---------------
+     logo gradient ran light #e9d589 → core #d9b322 → deep #c79a14.
+     gold-500 is the brand primary; an antique, slightly muted gold. */
+  --color-gold-50:  #faf4dd;
+  --color-gold-100: #f3e7b8;
+  --color-gold-200: #ebd78a;
+  --color-gold-300: #e0c45a; /* highlight / satin sheen top */
+  --color-gold-400: #d4ad33;
+  --color-gold-500: #c9a227; /* ★ brand primary — antique gold */
+  --color-gold-600: #b08a1e; /* hover / deeper emblem */
+  --color-gold-700: #8c6c18;
+  --color-gold-800: #685011;
+  --color-gold-900: #43340a; /* darkest — gold-on-dark text edge */
+
+  /* -- ESPRESSO — ink / text (sampled from the wordmark #4a3426) ----------*/
+  --color-espresso-50:  #f1ece6;
+  --color-espresso-100: #ddd0c5;
+  --color-espresso-200: #bca895;
+  --color-espresso-300: #97806a;
+  --color-espresso-400: #6f573f;
+  --color-espresso-500: #4a3426; /* ★ wordmark exact */
+  --color-espresso-600: #3d2b1f; /* primary body text */
+  --color-espresso-700: #2f2117;
+  --color-espresso-800: #241910;
+  --color-espresso-900: #1a1009; /* deepest — dramatic dark surfaces */
+
+  /* -- IVORY / CREAM — the canvas (warm off-white from the logo ground) ---*/
+  --color-ivory-50:  #fdfbf6; /* floating-light */
+  --color-ivory-100: #faf6ee;
+  --color-ivory-200: #f5f0e6; /* base canvas */
+  --color-ivory-300: #ede5d6;
+
+  /* -- SAND / GREIGE — warm neutral (camel tailoring + studio greige) -----
+     camel sampled ~#b1936f; studio backdrops ~#cccac5. */
+  --color-sand-50:  #f7f2e9;
+  --color-sand-100: #efe7d8;
+  --color-sand-200: #e2d5bf; /* champagne */
+  --color-sand-300: #d3c0a1;
+  --color-sand-400: #c2a880;
+  --color-sand-500: #b1936f; /* camel ★ */
+  --color-sand-600: #957a58;
+  --color-sand-700: #6f5942;
+  --color-sand-800: #4b3c2d;
+  --color-sand-900: #2d2318;
+
+  /* -- EDITORIAL ACCENTS — drawn from the collections, used like a garment:
+     rare and deliberate. Sampled from the photography. ------------------ */
+  --color-petrol:    #015a67; /* deep teal-petrol satin gowns */
+  --color-petrol-deep:#013f49;
+  --color-powder:    #aac4d8; /* powder / sky-blue satin gowns */
+  --color-azure:     #1f5e92; /* deeper royal-blue accents */
+  --color-blush:     #ecc6a8; /* warm blush / peach styling */
+  --color-noir:      #0c0a08; /* black eveningwear / boots */
+
+  /* Pure utility */
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* ======================================================================
+     COLOR — SEMANTIC ROLES
+     ====================================================================== */
+
+  /* Brand / interactive */
+  --brand:        var(--color-gold-500);
+  --brand-hover:  var(--color-gold-600);
+  --brand-active: var(--color-gold-700);
+  --brand-subtle: var(--color-gold-50);
+  --on-brand:     var(--color-espresso-700); /* text on gold — dark for AA */
+  --accent:       var(--color-petrol);       /* secondary editorial emphasis */
+  --accent-hover: var(--color-petrol-deep);
+
+  /* Surfaces — layering system: base → elevated → floating */
+  --surface-base:     var(--color-ivory-200);
+  --surface-elevated: var(--color-ivory-100);
+  --surface-floating: var(--color-ivory-50);
+  --surface-sunken:   var(--color-ivory-300);
+  --surface-muted:    var(--color-sand-100);
+  /* Dark / dramatic surfaces (low-light editorial, footers, hero accents) */
+  --surface-dark:          var(--color-espresso-900);
+  --surface-dark-elevated: var(--color-espresso-800);
+
+  /* Text */
+  --text-primary:   var(--color-espresso-600);
+  --text-secondary: var(--color-espresso-400);
+  --text-muted:     var(--color-espresso-300);
+  --text-on-dark:   var(--color-ivory-100);
+  --text-on-brand:  var(--color-espresso-700);
+  --text-accent:    var(--color-gold-700); /* gold reads as text only when deep */
+  --text-wordmark:  var(--color-espresso-500);
+
+  /* Borders / dividers / focus */
+  --border-subtle:  rgba(74, 52, 38, 0.12);
+  --border-strong:  rgba(74, 52, 38, 0.26);
+  --border-hair:    rgba(74, 52, 38, 0.18); /* 1px heritage rules */
+  --border-on-dark: rgba(247, 242, 233, 0.16);
+  --border-gold:    rgba(201, 162, 39, 0.55);
+  --focus-ring:     rgba(176, 138, 30, 0.65); /* gold-600 @ 65% */
+
+  /* ======================================================================
+     TYPOGRAPHY
+     ====================================================================== */
+  --font-display: 'Bodoni Moda', 'Bodoni MT', 'Didot', 'Times New Roman', serif;
+  --font-body:    'Tinos', 'Times New Roman', Times, serif;
+
+  /* Type scale (modular, editorial jumps) */
+  --text-xs:   0.75rem;   /* 12px — fine print / labels */
+  --text-sm:   0.875rem;  /* 14px */
+  --text-base: 1rem;      /* 16px — body */
+  --text-md:   1.125rem;  /* 18px — lead body */
+  --text-lg:   1.375rem;  /* 22px */
+  --text-xl:   1.75rem;   /* 28px */
+  --text-2xl:  2.25rem;   /* 36px */
+  --text-3xl:  3rem;      /* 48px */
+  --text-4xl:  4rem;      /* 64px */
+  --text-5xl:  5.5rem;    /* 88px — hero display */
+
+  /* Weights (Bodoni earns its contrast at 400–600; Times stays 400/700) */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* Line height */
+  --leading-tight:   1.04; /* large display Bodoni */
+  --leading-snug:    1.2;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.7;  /* Times body copy */
+
+  /* Letter spacing — the wordmark is widely tracked; presence, not noise */
+  --tracking-tight:   -0.01em; /* big Bodoni headings (Didone wants little) */
+  --tracking-normal:  0;
+  --tracking-wide:    0.08em;
+  --tracking-wider:   0.20em;  /* eyebrows / nav labels (uppercase) */
+  --tracking-widest:  0.34em;  /* the ETHERYANA wordmark lockup */
+
+  /* ======================================================================
+     SPACING (4px base, intentional steps)
+     ====================================================================== */
+  --space-0:  0;
+  --space-1:  0.25rem;  /* 4 */
+  --space-2:  0.5rem;   /* 8 */
+  --space-3:  0.75rem;  /* 12 */
+  --space-4:  1rem;     /* 16 */
+  --space-5:  1.5rem;   /* 24 */
+  --space-6:  2rem;     /* 32 */
+  --space-7:  3rem;     /* 48 */
+  --space-8:  4rem;     /* 64 */
+  --space-9:  6rem;     /* 96 */
+  --space-10: 8rem;     /* 128 */
+
+  /* ======================================================================
+     RADIUS — quiet luxury reads crisp; corners stay almost square
+     ====================================================================== */
+  --radius-none: 0;
+  --radius-sm:   1px;
+  --radius-md:   2px;
+  --radius-lg:   4px;
+  --radius-xl:   8px;
+  --radius-pill: 999px;
+
+  /* ======================================================================
+     SHADOWS — layered & warm-tinted with espresso (never flat grey)
+     ====================================================================== */
+  --shadow-sm: 0 1px 2px rgba(45, 35, 24, 0.06),
+               0 1px 1px rgba(45, 35, 24, 0.04);
+  --shadow-md: 0 4px 10px -3px rgba(45, 35, 24, 0.10),
+               0 2px 4px -2px rgba(45, 35, 24, 0.06);
+  --shadow-lg: 0 14px 28px -8px rgba(45, 35, 24, 0.14),
+               0 5px 10px -5px rgba(45, 35, 24, 0.08);
+  --shadow-xl: 0 28px 56px -14px rgba(45, 35, 24, 0.20),
+               0 10px 20px -10px rgba(45, 35, 24, 0.10);
+  /* Brand glow — for emblem / featured surfaces */
+  --shadow-gold: 0 18px 44px -14px rgba(176, 138, 30, 0.38);
+
+  /* ======================================================================
+     GRADIENTS — layered atmosphere + image treatment
+     ====================================================================== */
+  /* Text-over-image legibility scrim (use bottom-up) */
+  --gradient-image-overlay: linear-gradient(
+      to top, rgba(26, 16, 9, 0.66) 0%, rgba(26, 16, 9, 0.10) 45%, rgba(26,16,9,0) 70%);
+  /* Brand-tinted multiply treatment layer for cohesive editorial photos */
+  --gradient-image-tint: linear-gradient(
+      150deg, rgba(201, 162, 39, 0.16), rgba(74, 52, 38, 0.22));
+  /* Gilded sheen — mimics the emblem's gradient; decorative fills / rules */
+  --gradient-gold: linear-gradient(
+      105deg, var(--color-gold-700) 0%, var(--color-gold-400) 38%,
+      var(--color-gold-200) 50%, var(--color-gold-500) 72%, var(--color-gold-700) 100%);
+  --gradient-gold-soft: linear-gradient(135deg, var(--color-gold-500), var(--color-gold-700));
+  /* Warm atmospheric mesh — layered radials on the ivory canvas */
+  --gradient-warm-mesh:
+      radial-gradient(60% 80% at 12% 6%,  rgba(226, 213, 191, 0.55), transparent 60%),
+      radial-gradient(55% 70% at 90% 10%, rgba(201, 162, 39, 0.16), transparent 55%),
+      radial-gradient(80% 90% at 50% 112%, rgba(74, 52, 38, 0.10), transparent 62%),
+      var(--color-ivory-200);
+  /* Dramatic dark mesh — for editorial dark sections */
+  --gradient-dark-mesh:
+      radial-gradient(60% 80% at 18% 0%, rgba(201, 162, 39, 0.14), transparent 60%),
+      radial-gradient(50% 60% at 100% 100%, rgba(1, 90, 103, 0.18), transparent 60%),
+      var(--color-espresso-900);
+
+  /* ======================================================================
+     TEXTURE — subtle film grain (per anti-generic guardrails)
+     ====================================================================== */
+  --texture-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+
+  /* ======================================================================
+     MOTION — animate transform/opacity only; spring-style easing
+     ====================================================================== */
+  --ease-spring:   cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast:   150ms;
+  --duration-normal: 300ms;
+  --duration-slow:   560ms;
+
+  /* ======================================================================
+     Z-LAYERS
+     ====================================================================== */
+  --z-base:     0;
+  --z-elevated: 10;
+  --z-sticky:   100;
+  --z-overlay:  1000;
+  --z-modal:    1100;
+  --z-toast:    1200;
+
+  /* Layout */
+  --container-max: 1240px;
+}
+
+/* ----------------------------------------------------------------------------
+   Optional helper base styles — opt in by importing this file as a stylesheet.
+   Pure token consumers can ignore everything below this line.
+   ---------------------------------------------------------------------------- */
+.eth-wordmark {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--text-wordmark);
+}
+
+.eth-eyebrow {
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--text-muted);
+}
+
+.eth-heading {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+}
+
+.eth-body {
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
